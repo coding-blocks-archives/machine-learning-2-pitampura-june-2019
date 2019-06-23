@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://notes.acadview.com/?program=ml&class=13#/ -->
+<html class=" js no-mobile desktop no-ie chrome chrome72 root-section gradient rgba opacity textshadow multiplebgs boxshadow borderimage borderradius cssreflections csstransforms csstransitions no-touch no-retina fontface domloaded w-1853 gt-240 gt-320 gt-480 gt-640 gt-768 gt-800 gt-1024 gt-1280 gt-1440 gt-1680 lt-1920 no-portrait landscape" id="index-page"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Notes | AcadView</title>
+  <!-- Takes care of dynamically loading the template -->
+  <!--<script src="js/csi.min.js"></script>-->
+
+  <link rel="stylesheet" href="./Notes _ AcadView_files/reveal.css">
+  <link rel="stylesheet" href="./Notes _ AcadView_files/acadview.css">
+  <link rel="stylesheet" href="./Notes _ AcadView_files/black.css">
+
+  <!--Custom css-->
+  <link rel="stylesheet" href="./Notes _ AcadView_files/custom.css">
+
+  <!-- <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> -->
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="./Notes _ AcadView_files/zenburn.css"><script type="text/javascript" src="./Notes _ AcadView_files/external.js"></script><script type="text/javascript" src="./Notes _ AcadView_files/notes.js"></script><script type="text/javascript" src="./Notes _ AcadView_files/highlight.js"></script>
+
+
+</head>
+<body>
+
+<div class="reveal slide center ready" role="application" data-transition-speed="default" data-background-transition="fade">
+  <div class="slides" data-external="ml/13.html" style="width: 960px; height: 700px; zoom: 1.27817;"><section class="present" style="top: 260.5px; display: block;">
+    <h3> The Titanic : Case Study</h3>
+    <i>Gaussian Naive Bayes</i>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 275.5px; display: block;">
+    <div>In the last class we learnt about the K Nearest Neighbours algorithm.</div>
+    <br>
+    <div>We also learnt a very important concept in mathematics i.e. the Bayes' Theorem.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 257.5px; display: block;">
+    <div>We discussed how Bayes' Theorem forms the basics of our next Classification algorithm.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Would anybody like to guess which algorithm is this?</div>
+</section>
+
+<section hidden="" aria-hidden="true" class="future" style="top: 350px; display: none;">
+    <div class="gold-font">Naive Bayes Classifier</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Let's try to understand the algorithm with the help of an example.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">You're given a dataset for a group of people as follows :
+        <br>
+        <ul class="space-ul">
+            <li><span class="blue-font">Features</span> : Age, Salary</li>
+            <li><span class="red-font">Labels</span> : Walks, Drives</li>
+        </ul>
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="1">This set of data gives us the information about the mode of travel i.e. if the person walks or drives to work based on their Age and Salary.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Consider the given plot of the data with <span class="red-font">Red Markers</span> representing that the person walks to work and <span class="green-font">Green Markers</span> representing that the person drives to work.
+        <br>
+        <img src="./Notes _ AcadView_files/8Db50on.png" style="width: 700px">
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>We're given a new data point represented by the <span style="color: lightgray">Gray Marker</span>.
+        <br>
+        <img src="./Notes _ AcadView_files/TGIbbZY.png" style="width: 700px">
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Now your task it to classify this new data point into either the group who walks to work or the group who drives to work using the Bayes' Theorem.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Do you guys know how to do this?</div>
+    <br>
+    <div class="fragment" data-fragment-index="1">Let's see how we can do this.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>To solve this problem, we need a plan of attack.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">And here it is.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>We're going to take the Bayes' Theorem:
+        <br>
+        <img src="./Notes _ AcadView_files/oxI2XVZ.png">
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>And we're going to apply it twice.
+    </div>
+    <br>
+    <div><h2>Step 1</h2></div>
+    <br>
+    <div class="fragment" data-fragment-index="0">In the first application, we will try to find the Probability that this person walks given his features X.
+        <br>
+        <img src="./Notes _ AcadView_files/gUZElgo.png">
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="1">Here X represents the features of the new data point i.e. the Age and Salary corresponding to the new data point.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>The above expression can be broken down into 4 probabilistic expressions, each having a different name:
+        <br>
+        <img src="./Notes _ AcadView_files/1qK1gSW.png">
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="0">The numbers corresponding to each of these probabilities is the order in which we are going to calculate them.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Here's a formal definition of all the 4 kinds of probabilities:
+        <br>
+        <ul class="space-ul">
+            <li><span class="red-font">Prior Probability</span> : It is the Probability that a certain event or outcome will occur.</li>
+            <li class="fragment" data-fragment-index="0"><span class="blue-font">Marginal Likelihood</span> : It is just the normalizing constant of the Bayes' theorem.</li>
+            <li class="fragment" data-fragment-index="1"><span class="green-font">Likelihood</span> : It is the probability of an event or situation taking place.</li>
+            <li class="fragment" data-fragment-index="2"><span class="gold-font">Posterior Probability</span> : It is the probability an event will happen after all evidence or background information has been taken into account.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div><h2>Step 2</h2></div>
+    <br>
+    <div class="fragment" data-fragment-index="0">In the second application, we will try to find the Probability that this person drives given his features X.
+        <br>
+        <img src="./Notes _ AcadView_files/gsLeWUE.png">
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Just like we did in Step 1, the above expression can also be broken down into 4 probabilistic expressions, each having a different name:
+        <br>
+        <img src="./Notes _ AcadView_files/1qK1gSW.png">
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Similarly, the numbers corresponding to each of these probabilities is the order in which we are going to calculate them.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div><h2>Step 3</h2></div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Finally we're going to compare <span class="blue-font">P(Walks|X)</span> v.s. <span class="red-font">P(Drives|X)</span>.</div>
+    <br>
+    <div class="fragment" data-fragment-index="1">According to this, we will then classify the new data point into one of these classes.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Let's start with Step 1.
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="0">For this, we need to calculate all the 4 probabilities mentioned below one by one.
+        <br>
+        <img src="./Notes _ AcadView_files/1qK1gSW.png">
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div class="red-font">#1. P(Walks) : The prior probability</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">By definition we know that it is the Probability that a certain event or outcome will occur.</div>
+    <br>
+    <div class="fragment" data-fragment-index="1">Therefore probability that a persons walks is simply given by:
+        <pre><code class="hljs javascript">P(Walks) = <span class="hljs-built_in">Number</span> <span class="hljs-keyword">of</span> People Who Walk/ Total <span class="hljs-built_in">Number</span> <span class="hljs-keyword">of</span> People</code></pre>
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="2">We have collected the following data for you from the graph:
+        <br>
+        <ul class="space-ul">
+            <li>No. of people who walk to work : 10</li>
+            <li>No. of people who drive to work : 20</li>
+        </ul>
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Using the above data, it should be easy to calculate P(Walks).</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Let's do that:
+        <br>
+        <pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">P</span><span class="hljs-params">(Walks)</span></span> = <span class="hljs-number">10</span>/(<span class="hljs-number">10</span>+<span class="hljs-number">20</span>)
+         = <span class="hljs-number">1</span>/<span class="hljs-number">3</span>        </code></pre>
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="1">Let's calculate the next probability on our list.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div class="red-font">#2. P(X) : The marginal likelihood</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">By definition we know that it is just the normalizing constant of the Bayes' theorem.</div>
+    <div class="fragment" data-fragment-index="1">To find this we need to look back at the plot of our data set.
+        <br>
+        <img src="./Notes _ AcadView_files/TGIbbZY.png" style="width: 700px">
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Next we're going to draw a circle around our new data point.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Something like this:
+        <br>
+        <img src="./Notes _ AcadView_files/xE9D83m.png">
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="1">The radius of this circle is selected randomly. There is no specified set of rules that define the length of the radius of this circle.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Let's remove the new data point from this circle for a while to avoid any confusion.
+        <br>
+        <img src="./Notes _ AcadView_files/GXgbLG8.png">
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Now we say that the points in the circle as similar in terms of the features to the new data point.</div>
+    <br>
+    <div class="fragment" data-fragment-index="1">We're not saying that they are exactly the same, but they're very similar to the new point and differ only by marginal values.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Now let's understand what P(X) means.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">P(X) is the probability of a new point (not the one represented by grey marker) added to our data set being similar to the point that we actually are adding to our data set i.e the point represented by the grey marker.</div>
+    <br>
+    <div class="fragment" data-fragment-index="1">In simple words, it is the probability of any random point that we add to fall into this circle.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Now P(X) is calulcated as:
+        <br>
+        <img src="./Notes _ AcadView_files/BA90Oru.png">
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>We already know that the number of total observations is 30.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Number of similar observations can easily be counted from the graph, which turns out to be 4.</div>
+    <br>
+    <div class="fragment" data-fragment-index="1">Therefore, P(X) is given by:
+        <br>
+        <pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">P</span><span class="hljs-params">(X)</span></span> = <span class="hljs-number">4</span>/<span class="hljs-number">30</span></code></pre>
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="2">Before we proceed to find the next parameter, let's try to understand the marginal likelihood a little better.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>All of you must be wondering about how to draw that circle in particular?</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">How to decide the radius for that circle?</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Well, you don't have to do that.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">We used the circle only for understanding the intuition of marginal likelihood.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>The circle signifies that marginal likelihood is calculated with reference to the number of the data points in the proximity of the new point that we are trying to classify.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">In practise, the algorithm finds out the data points which are immediate neighbours to the new data point.</div>
+    <br>
+    <div class="fragment" data-fragment-index="1"><i>This can be related to finding out the nearest neighbours in KNN</i></div>
+</section>
+
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div class="red-font">#3. P(X|Walks) : The likelihood</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">By definition we know that it is
+       the probability of an event or situation taking place.</div>
+    <br>
+    <div class="fragment" data-fragment-index="1">Now P(X|Walks) is the probability of a
+      randomly selected point being similar to X given that
+      the person walks.
+      Since we're given that the person walks,
+      we can ignore the data points for the driving class.
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="2">
+        <img src="./Notes _ AcadView_files/pBSKalI.png">
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>It is simple to calculate the likelihood.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Since it calculates the probability of a randomly selected point being similar to the data point given that the person walks, we can calculate it as:
+        <br>
+        <pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">P</span><span class="hljs-params">(X|Walks)</span></span> = Number of similar observation among those who walk / Total no. of walkers</code></pre>
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>From the graph we can clearly see that the number of similar observations in this case is 3 and we already know that the count of total number of walkers is 10.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Therefore, P(X|Walks) is given by:
+        <br>
+        <pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">P</span><span class="hljs-params">(X|Walks)</span></span> = <span class="hljs-number">3</span>/<span class="hljs-number">10</span></code></pre>
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="1">Let's calculate the next parameter.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div class="red-font">#4. P(Walks|X)</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">By definition we know that it is the probability an event will happen after all evidence or background information has been taken into account.</div>
+    <br>
+    <div class="fragment" data-fragment-index="1">P(Walks|X) is the probability of a person walking to work given his features X.</div>
+    <br>
+    <div class="fragment" data-fragment-index="2">Calculating this should be easy! We just need to plug all the values calculated (background information) above into this formula:
+        <br>
+        <img src="./Notes _ AcadView_files/gUZElgo.png">
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Let's do that:
+        <br>
+        <pre><code class="hljs lisp">P(<span class="hljs-name">Walks</span>|X) = (<span class="hljs-number">3/10</span>) * (<span class="hljs-number">10/30</span>) / (<span class="hljs-number">4/30</span>)
+           = <span class="hljs-number">0.75</span></code></pre>
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Therefore, the probability of the new data point represented by the grey marker falling into the class <i>Walks to work</i> is 0.75.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Now we need to follow the whole process again to calculate P(Drives|X) i.e. our step 2.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">To save some time, here are all the values needed to calculate the above probability:
+        <br>
+        <ul class="space-ul">
+            <li>P(Drives) = 2/3</li>
+            <li>P(X) = 4/30</li>
+            <li>P(X|Drives) = 1/20</li>
+        </ul>
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Let's substitute all these values into the following formula to find the value of P(Drives|X).
+        <br>
+        <img src="./Notes _ AcadView_files/gsLeWUE.png">
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Therefore the probability that the person drives given the features X is :
+        <br>
+        <pre><code class="hljs lisp">P(<span class="hljs-name">Drives</span>|X) = (<span class="hljs-number">1/20</span>)*(<span class="hljs-number">2/3</span>) / (<span class="hljs-number">4/30</span>)
+            = <span class="hljs-number">0.25</span></code></pre>
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="0">This gives us the probability of the data point marked by grey marker falling into class <i>Drives to work</i> as 0.25.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div><h1>NOTE</h1></div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Please note that P(Drives|X) is not equal to 1 - P(Walks|X). It is just that in this case they turned out to be so.</div>
+    <br>
+    <div class="fragment" data-fragment-index="1">1 - P(Walks|X) is the probability that the person DOES NOT WALK given features X. That does not mean that the person DRIVES.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Now that we have step 1 and 2 completed, let's move to Step 3.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Step 3 asks us to compare the two probabilities and whichever is greater, the new data point belongs to that class.</div>
+    <br>
+    <div class="fragment" data-fragment-index="1">Clearly, P(Walks|X) &gt; P(Drives|X).</div>
+    <br>
+    <div class="fragment" data-fragment-index="2">Therefore the new data point with features X belongs to class <span class="blue-font">Walks to work</span>.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>This is exactly how the Naive Bayes' classifier works.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Now that we have an understanding of the working of this algorithm, let's write the code to implement it to our Titanic Dataset.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>To start with, we import the classifier from sklearn as follows:
+        <pre><code class="hljs xl">from sklearn.naive_bayes <span class="hljs-keyword">import</span> GaussianNB
+</code></pre>
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Like every other time, next we proceed to create an instance of the classifier:
+        <pre><code class="hljs ini"><span class="hljs-attr">clf</span> = GaussianNB()
+</code></pre>
+    </div>
+</section>
+
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>Now we train the classifier to be able to learn from the data set as follows:
+        <pre><code class="hljs css"><span class="hljs-selector-tag">clf</span><span class="hljs-selector-class">.fit</span>(<span class="hljs-selector-tag">X_train</span>, <span class="hljs-selector-tag">y_train</span><span class="hljs-selector-class">.ravel</span>())
+</code></pre>
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="0">And now that the classifier has been trained, the next step is to predict the class of our testing data.
+        <pre><code class="hljs ini"><span class="hljs-attr">y_pred_gnb</span> = clf.predict(X_test)
+</code></pre>
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>And here we are! We've successfully implemented the Naive Bayes Classifier on our data set.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Let's proceed to calculate it's accuracy and see how this algorithm has performed:
+        <pre><code class="hljs processing">from sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score
+acc_gnb = <span class="hljs-built_in">round</span>(accuracy_score(y_pred_gnb, y_test) * <span class="hljs-number">100</span>, <span class="hljs-number">2</span>)
+<span class="hljs-built_in">print</span> (<span class="hljs-built_in">str</span>(acc_gnb) + <span class="hljs-string">' percent'</span>)</code></pre>
+    </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>The accuracy score for Naive Bayes is <br>
+        <h2>78.36 percent</h2>
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="0">WOW! That's a really good accuracy.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>What next?</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Before we end today's class, here are a few extras about Naive Bayes classifier which might help you in Job Interviews.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div class="blue-font">Why Naive?</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">This is because the Bayes Theorem requires some independence assumption. And since the Bayes Theorem is the underlying principle of the Naive Bayes classifier, we take these assumptions to be true for the features.</div>
+    <br>
+    <div class="fragment" data-fragment-index="1">Since these assumptions are not always Ideally true, it is kind of Naive (<i>def : having or showing a lack of experience or knowledge </i>) to assume these to be true. Hence the name.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>To understand this better, let's consider our example.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">The two features are <b>Age</b> ane <b>Salary</b>. For the application of Naive Bayes classifier, we assumed that these two features were totally independent of each other. That is, change in Age does not reflect any change in Salary and vice versa.</div>
+    <br>
+    <div class="fragment" data-fragment-index="1">But we know that in real world that is not very true. In most of the cases, as your Age increases your Salary also increase with it. This is because with Age the amount of experience you have also increases.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>But ideally they should be independent because a 35 year old Post Office worker will possibly be earning less than a 25 year old Software Engineer.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">And since we assume the Ideal case to be true, the algorithm is considered to be Naive.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div class="blue-font">We can actually skip calculating P(X).</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">Have a look at this:
+        <br>
+        <img src="./Notes _ AcadView_files/QrROr1Z.png">
+    </div>
+    <br>
+    <div class="fragment" data-fragment-index="1">Since P(X) is a common denominator, it gets cancelled out. We know that P(X) will always be greater than 0 because the circle we draw will atleast have one point inside it, hence we can easily cancel that out and there is no need to calculate it.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div class="blue-font">Industry Applications</div>
+    <br>
+    <div class="fragment" data-fragment-index="0"><ul class="space-ul">
+        <li>To mark an email as spam, or not spam.</li>
+        <li>Classify a news article about technology, politics, or sports.</li>
+        <li>Check a piece of text expressing positive emotions, or negative emotions</li></ul> </div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div>This was all about the extras for Naive Bayes Classifier.</div>
+    <br>
+    <div class="fragment" data-fragment-index="0">With this we end our today's class.</div>
+</section>
+
+<section class="medium-font future" hidden="" aria-hidden="true" style="top: 350px; display: none;">
+    <div class="gold-font">Homework</div>
+
+    <ul class="space-ul">
+        <li>
+            This is the code we have written today:
+            <a target="_blank" href="https://gist.github.com/avmain/76db264e2d2b7a72e4a8b32257432c4e">
+                Code Snippet</a> <br><br>
+        </li><li>
+            Read more about Naive Bayes Classifier algorithm from sklearn <a href="http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html" target="_blank">here</a>.
+        </li>
+    </ul>
+</section>
+
+<section hidden="" aria-hidden="true" class="future" style="top: 350px; display: none;">
+    Until next time!<br>
+    <img src="./Notes _ AcadView_files/yDWHTmc.png" style="width: 400px">
+</section>
+</div>
+<div class="backgrounds"><div class="slide-background present" data-loaded="true" style="display: block;"></div><div class="slide-background medium-font future" data-loaded="true" style="display: block;"></div><div class="slide-background medium-font future" data-loaded="true" style="display: block;"></div><div class="slide-background future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background medium-font future" style="display: none;"></div><div class="slide-background future" style="display: none;"></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" style="display: block;"><button class="navigate-left" aria-label="previous slide" disabled="disabled"></button><button class="navigate-right enabled" aria-label="next slide"></button><button class="navigate-up" aria-label="above slide" disabled="disabled"></button><button class="navigate-down" aria-label="below slide" disabled="disabled"></button></aside><div class="slide-number" style="display: block;"><span class="slide-number-a">1</span><span class="slide-number-delimiter">/</span><span class="slide-number-b">52</span></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px);">
+     The Titanic : Case Study
+    Gaussian Naive Bayes
+</div></div>
+
+
+<script src="./Notes _ AcadView_files/head.min.js"></script>
+<script src="./Notes _ AcadView_files/reveal.js"></script>
+
+<script src="./Notes _ AcadView_files/jquery.js"></script>
+
+
+<script>
+  console.log("Hello") ;
+  var slidePath = getParameterByName('program') + "/" + getParameterByName('class') + ".html";
+  document.getElementsByClassName("slides")[0].setAttribute("data-external", slidePath);
+
+  // Timeout because DOM needs to be already loaded before Reveal initializatin
+  // Otherwise slides will not show up
+
+  Reveal.initialize({
+    history: true,
+    slideNumber: 'c/t',
+    // More info https://github.com/hakimel/reveal.js#dependencies
+    dependencies: [
+      {src: 'plugin/notes/notes.js', async: true},
+      {
+        src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+        hljs.initHighlightingOnLoad();
+      }
+      },
+      {
+        src: 'plugin/external/external.js', condition: function () {
+        return !!document.querySelector('[data-external]');
+      }
+      },
+    ]
+  });
+
+  function roundTime(timeStamp) {
+    return Math.round(timeStamp);
+  }
+
+
+  (function () {
+    var prevSlideTime = 0;
+    var lastTabChanged = 0 ;
+    var slideVisited = [];
+    var sessionId = getParameterByName('s');
+    var payload = {
+      notes_url: window.location.href,
+      batch_id: parseInt(getParameterByName('b'), 10),
+      slides_data: []
+    };
+
+    Reveal.addEventListener('slidechanged', function (event) {
+
+      slideVisited.push({
+        time_spent_in_msecs: roundTime(event.timeStamp - prevSlideTime),
+        slide_number: event.indexh
+      });
+
+      prevSlideTime = event.timeStamp;
+
+      //console.log(slideVisited) ;
+    });
+
+    document.addEventListener('visibilitychange', function(event){
+      var currentSlide = parseInt(window.location.hash.split('/')[1]) ;
+
+      if (document.visibilityState === 'hidden') {
+
+        slideVisited.push({
+          time_spent_in_msecs: roundTime(event.timeStamp - prevSlideTime),
+          // Because this is not a slide change event and we are
+          // taking the slide number from the url. The url is 0 indexed
+          // Converting it to 1-indexed
+          slide_number: isNaN(currentSlide) ? 1 : currentSlide + 1
+        });
+      }
+      // This runs in both conditions of hidden or visible
+      // Thus the prevSlideTime is keeping a track of
+      // when the slide was last visible or invisible
+
+      //console.log(slideVisited, event.timeStamp, prevSlideTime);
+
+      prevSlideTime = event.timeStamp;
+
+    });
+
+    function poll() {
+      if (slideVisited.length && sessionId !== null) {
+        payload.slides_data = Object.assign([], slideVisited);
+        slideVisited = [];
+
+        try {
+          var xhr = new XMLHttpRequest();
+          // xhr.withCredentials = true;
+
+          var host = window.location.hostname.includes('localhost') ?
+            'acadstaging.com/py' :
+            'acadprojects.com/track';
+          xhr.open("POST", "https://" + host + "/notes/track", true);
+          xhr.setRequestHeader("content-type", "application/json");
+          // xhr.setRequestHeader("cache-control", "no-cache");
+          xhr.setRequestHeader("sessionId", sessionId);
+
+          xhr.send(JSON.stringify(payload));
+        } catch (error) {
+          // console.log(error);
+        }
+      }
+      setTimeout(arguments.callee, 10000);
+    }
+
+    poll();
+
+    // Link hijacking
+    try {
+      Reveal.addEventListener('ready', function() {
+        var anchors = document.querySelectorAll('a');
+
+        anchors.forEach(function(anchor) {
+          anchor.addEventListener('click', function(e) {
+            var xhr = new XMLHttpRequest();
+
+            var host = window.location.hostname.includes('localhost') ?
+              'acadstaging.com/py' :
+              'acadprojects.com/track';
+
+            xhr.open("POST", "https://" + host + "/notes/link/track", true);
+            xhr.setRequestHeader("content-type", "application/json");
+            xhr.setRequestHeader("sessionId", sessionId);
+            xhr.send(JSON.stringify({
+              url: anchor.href,
+              notes_url: window.location.href
+            }));
+          })
+        })
+      })
+    } catch(error){
+      // console.log(error);
+    }
+  })();
+
+
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+
+</script>
+
+
+
+
+
+</body></html>
