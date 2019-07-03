@@ -8,3 +8,4 @@
 - `class 06`: Naive Bayes Classifier
 - `class 07`: Decission Trees
 - `class 08`: Random Forest Classifier and Linear Regression
+- `class 09`: Logistic Regression
