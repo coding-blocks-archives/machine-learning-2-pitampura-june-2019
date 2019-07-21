@@ -9,3 +9,12 @@
 - `class 07`: Decission Trees
 - `class 08`: Random Forest Classifier and Linear Regression
 - `class 09`: Logistic Regression
+- `class 10`: NN from Scratch
+- `class 11`: Keras NN
+- `class 12`: Convolution Neural Networks
+- `class 13`: Transfer Learning
+- `class 14`: Dimensionality Reduction using Autoencoders,TSNE and PCA
+- `class 15`: Gans and Markov Chain
+- `class 16`: Word_2_vec, Glove Embeddings and Product Recommendation System
+- `class 17`: Emoji Prediction using RNN ans LSTM
+- `class 18`: Support Vector Machine
